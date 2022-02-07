@@ -1,22 +1,26 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import './App.css'
-import {useDispatch} from 'react-redux'
-import {useTypedSelector} from './hooks/useTypedSelector'
-import {fetchPhotos} from './store/photosReducer'
+import {AlbumsPage} from './pages/AlbumsPage'
+import {Route, Routes} from 'react-router-dom'
+import {CurrentAlbum} from './pages/currentAlbum/CurrentAlbom'
+import {Header} from './components/Header'
+
+
 
 function App() {
-  const dispatch = useDispatch()
-  const {photosData} = useTypedSelector(state => state.photos)
 
-  useEffect(() => {
-    dispatch(fetchPhotos({_limit: 10}))
-  }, [dispatch])
-  console.log(photosData)
+
   return (
       <div className="App">
-        hello
+        <Header/>
+        <Routes>
+          <Route path="/*" element={<div>ERROR 404 PATH NOT FOUND</div>}/>
+          <Route path="/" element={<AlbumsPage/>}/>
+          <Route path="/:albumId" element={<CurrentAlbum/>}/>
+        </Routes>
       </div>
   )
 }
 
 export default App
+

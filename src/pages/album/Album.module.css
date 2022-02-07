@@ -1,0 +1,10 @@
+.album {
+	word-wrap: break-word;
+	width: 200px;
+	height: 200px;
+	margin: 20px;
+	border: 1px solid blueviolet;
+	padding: 0 5px;
+	user-select: none;
+	cursor: pointer;
+}
