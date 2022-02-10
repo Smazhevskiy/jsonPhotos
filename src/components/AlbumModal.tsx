@@ -1,5 +1,4 @@
 import * as React from 'react'
-import {useReducer} from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
@@ -12,18 +11,6 @@ import {Delete} from '@mui/icons-material'
 import Card from '@mui/material/Card'
 import {AlbumFullSize} from '../pages/AlbumFullSize'
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 680,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-}
-
 
 interface CardModal {
   thumbnailUrl?: string,
@@ -35,8 +22,7 @@ interface CardModal {
 }
 
 export const PhotoAlbumModal = (props: CardModal) => {
-  const {thumbnailUrl, url, id, title, removePhoto, albumId} = props
-
+  const {thumbnailUrl, url, title, id} = props
 
 
   const [open, setOpen] = React.useState(false)
@@ -45,7 +31,7 @@ export const PhotoAlbumModal = (props: CardModal) => {
 
   return (
       <div>
-        <CardStyled >
+        <CardStyled>
           <Card sx={{minHeight: 245}}>
             <CardActionArea onClick={handleOpen}>
               <CardMedia
@@ -58,9 +44,12 @@ export const PhotoAlbumModal = (props: CardModal) => {
                 <Typography variant="body2" color="text.secondary">
                   {title}
                 </Typography>
+                <Typography className={'photoId'} variant="body2" color="text.secondary">
+                  {`id: ${id}`}
+                </Typography>
               </CardContent>
             </CardActionArea>
-            <IconButton onClick={()=> alert('remove')} className={'icon'}>
+            <IconButton onClick={() => alert('remove')} className={'icon'}>
               <Delete/>
             </IconButton>
           </Card>
@@ -96,8 +85,26 @@ const CardStyled = styled.div`
     right: 8px;
   }
 
+  .photoId {
+    position: absolute;
+    top: 7px;
+    left: 9px;
+  }
+
   @media screen and (max-width: 492px) {
     width: 290px;
   }
-
 `
+
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 680,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+}
