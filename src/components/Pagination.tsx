@@ -22,6 +22,7 @@ export const PaginationRounded = (props: PaginationType) => {
             onChange={handlerOnchangePage}
             page={currentPage}
             count={count}
+            size={'small'}
             boundaryCount={1}
             color={'primary'}
             variant="outlined"

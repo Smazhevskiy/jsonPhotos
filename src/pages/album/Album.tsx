@@ -1,5 +1,5 @@
-import { NavLink } from 'react-router-dom'
-import styles from './Album.module.css'
+import {NavLink} from 'react-router-dom'
+import styled from 'styled-components'
 
 
 interface AlbumProps {
@@ -7,20 +7,39 @@ interface AlbumProps {
   title?: string,
   url?: string,
   thumbnailUrl?: string,
+  albumId?: number,
 }
 
 export const Album = (props: AlbumProps) => {
   const {
     thumbnailUrl,
     title,
-    id
+    id,
+    url,
+    albumId
   } = props
 
 
   return (
-      <div style={{backgroundImage: `url(${thumbnailUrl})`}} className={styles.album}>
-        <div>{title}</div>
-        <NavLink to={`/${id}`} >show</NavLink>
-      </div>
+      <AlbumStyled>
+        <img className={'img'} src={`${thumbnailUrl}`} alt={`${id}`}/>
+      </AlbumStyled>
+
   )
 }
+
+const AlbumStyled = styled.div`
+  word-wrap: break-word;
+  width: 200px;
+  height: 200px;
+  margin: 5px 0;
+  border: 1px solid blueviolet;
+
+  .img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+  }
+`
+
+// style={{backgroundImage: `url(${thumbnailUrl})`}}

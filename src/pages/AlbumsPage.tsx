@@ -1,61 +1,104 @@
 import {useDispatch} from 'react-redux'
 import {useTypedSelector} from '../hooks/useTypedSelector'
-import {useEffect} from 'react'
-import {fetchPhotos, setCurrentPage} from '../store/photosReducer'
-import {Album} from './album/Album'
+import {ChangeEvent, useEffect} from 'react'
+import {fetchPhotos, setCurrentPage, setSortByHighest} from '../store/photosReducer'
 import {PaginationRounded} from '../components/Pagination'
+import styled from 'styled-components'
+import {AreaCard} from '../components/Card'
+import {Select} from '../components/Select'
 
 export const AlbumsPage = () => {
   const dispatch = useDispatch()
-  const {photosData, currentPage} = useTypedSelector(state => state.photos)
+  const {photosData, currentPage, photosPerPage} = useTypedSelector(state => state.photos)
 
-
-  useEffect(() => {
-    dispatch(fetchPhotos({_limit: 1201}))
-  }, [dispatch])
 
   let totalPhotos = Object.keys(photosData).length
-  let pagesCount = Math.ceil(totalPhotos / 10)
-  let pages = []
-  for (let i = 1; i <= pagesCount; i++) {
-    pages.push(i)
-  }
+  let pagesCount = Math.ceil(totalPhotos / photosPerPage)
 
-  const indexOfLastPhoto = currentPage * 10 //10 - photosPerPage
-  const indexOfFirstPhoto = indexOfLastPhoto - 10 //10 - photosPerPage
-  const renderingPhotos = photosData.slice(indexOfFirstPhoto, indexOfLastPhoto)
+
+  const indexOfLastPhoto = currentPage * photosPerPage //10 - photosPerPage
+  const indexOfFirstPhoto = indexOfLastPhoto - photosPerPage //10 - photosPerPage
+  let renderingPhotos = photosData.slice(indexOfFirstPhoto, indexOfLastPhoto)
 
 
   const handlerOnchangePage = (e: any) => {
     dispatch(setCurrentPage(Number(e.target.innerText)))
   }
 
+  let removePhoto = (photoId: number | undefined) => {
+    return renderingPhotos.filter(photo => photo.id!==photoId)
+  }
+
+  const handlerSelectSort = (e: ChangeEvent<HTMLSelectElement>) => {
+    dispatch(setCurrentPage(1))
+    dispatch(setSortByHighest())
+  }
+
+  useEffect(() => {
+    dispatch(fetchPhotos({_limit: 1200}))
+  }, [dispatch])
 
   return (
-      <div>
-        <PaginationRounded
-            handlerOnchangePage={handlerOnchangePage}
-            currentPage={currentPage}
-            count={pagesCount}
-        />
-        <div style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          justifyContent: 'space-evenly',
-          maxWidth: '1200px',
-          margin: '0 auto'
-        }}>
+      <AlbumsItemsStyled>
+        <div className={'nav-menu'}>
+          <PaginationRounded
+              handlerOnchangePage={handlerOnchangePage}
+              currentPage={currentPage}
+              count={pagesCount}
+          />
+          <Select selectChange={handlerSelectSort}/>
+        </div>
+        <div className={'main'}>
           {renderingPhotos ? renderingPhotos.map(photo => {
-            return <Album
+            return <AreaCard
+                removePhoto={removePhoto}
                 key={photo.id}
+                thumbnailUrl={photo.thumbnailUrl}
+                url={photo.url}
                 id={photo.id}
                 title={photo.title}
-                url={photo.url}
-                thumbnailUrl={photo.thumbnailUrl}
+                albumId={photo.albumId}
             />
           }):null}
         </div>
-      </div>
+      </AlbumsItemsStyled>
   )
 }
 
+const AlbumsItemsStyled = styled.div`
+  .nav-menu {
+    margin: 1rem 0;
+    height: 2rem;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 0 10px;
+  }
+
+  .main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .main > div:last-of-type {
+
+  }
+
+  @media screen and (max-width: 532px) {
+    .main {
+      justify-content: center;
+    }
+  }
+
+  @media screen and (max-width: 387px) {
+    .nav-menu {
+      display: flex;
+      width: 320px;
+      flex-wrap: revert;
+      margin-top: 50px;
+    }
+  }
+
+`
