@@ -4,8 +4,8 @@ import {ChangeEvent, useEffect} from 'react'
 import {fetchPhotos, setCurrentPage, setSortByHighest} from '../store/photosReducer'
 import {PaginationRounded} from '../components/Pagination'
 import styled from 'styled-components'
-import {AreaCard} from '../components/Card'
 import {Select} from '../components/Select'
+import {PhotoAlbumModal} from '../components/AlbumModal'
 
 export const AlbumsPage = () => {
   const dispatch = useDispatch()
@@ -14,8 +14,6 @@ export const AlbumsPage = () => {
 
   let totalPhotos = Object.keys(photosData).length
   let pagesCount = Math.ceil(totalPhotos / photosPerPage)
-
-
   const indexOfLastPhoto = currentPage * photosPerPage //10 - photosPerPage
   const indexOfFirstPhoto = indexOfLastPhoto - photosPerPage //10 - photosPerPage
   let renderingPhotos = photosData.slice(indexOfFirstPhoto, indexOfLastPhoto)
@@ -50,7 +48,7 @@ export const AlbumsPage = () => {
         </div>
         <div className={'main'}>
           {renderingPhotos ? renderingPhotos.map(photo => {
-            return <AreaCard
+            return <PhotoAlbumModal
                 removePhoto={removePhoto}
                 key={photo.id}
                 thumbnailUrl={photo.thumbnailUrl}
