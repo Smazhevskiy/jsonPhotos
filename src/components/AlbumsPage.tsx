@@ -2,10 +2,10 @@ import {useDispatch} from 'react-redux'
 import {useTypedSelector} from '../hooks/useTypedSelector'
 import {ChangeEvent, useEffect} from 'react'
 import {fetchPhotos, setCurrentPage, setSortByHighest} from '../store/photosReducer'
-import {PaginationRounded} from '../components/Pagination'
+import {PaginationRounded} from './Pagination'
 import styled from 'styled-components'
-import {Select} from '../components/Select'
-import {PhotoAlbumModal} from '../components/AlbumModal'
+import {Select} from './Select'
+import {PhotoAlbumModal} from './AlbumModal'
 
 export const AlbumsPage = () => {
   const dispatch = useDispatch()

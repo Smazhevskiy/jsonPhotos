@@ -29,7 +29,7 @@ const initialState: PhotosInitialState = {
     {id: 1, title: '', url: '', thumbnailUrl: '', albumId: 3}
   ],
   currentPage: 1,
-  photosPerPage: 12,
+  photosPerPage: 15,
 }
 
 export const photosReducer = (state = initialState, action: PhotosActions): PhotosInitialState => {

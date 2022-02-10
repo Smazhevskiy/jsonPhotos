@@ -9,7 +9,7 @@ import CardContent from '@mui/material/CardContent'
 import IconButton from '@mui/material/IconButton'
 import {Delete} from '@mui/icons-material'
 import Card from '@mui/material/Card'
-import {AlbumFullSize} from '../pages/AlbumFullSize'
+import {AlbumFullSize} from './AlbumFullSize'
 
 
 interface CardModal {

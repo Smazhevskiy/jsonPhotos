@@ -1,6 +1,6 @@
 import React from 'react'
 import './App.css'
-import {AlbumsPage} from '../../pages/AlbumsPage'
+import {AlbumsPage} from '../AlbumsPage'
 import {Route, Routes} from 'react-router-dom'
 import {Header} from '../Header'
 
